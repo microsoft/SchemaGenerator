@@ -5,18 +5,17 @@ A generic tool for automatic schema generation for a set of C# classes.
 * Integration between C# code and TypeScript UI.
 * Source controlled database schema, automatically generated at compile-time, for understanding necessary database migration steps.
 
-# Usage
+# Algorithm and Usage
 
-Extended with a set of root types,
-it scans relevant assemblies to understand what types are serializable:
+Extended with a set of root types, the generator scans relevant assemblies to understand what types are serializable:
 * Serializable fields and properties of other serializable types.
 * Base classes and derived classes of serializable types.
 
-It can be extended by any serialization logic that can be inferred by the MemberInfo itself, for example:
+It can be extended to support any serialization logic that can be inferred by the MemberInfo itself, for example:
 * An attribute that represents serializability.
 * A set of rules on the access modifiers of the field or property.
 
-Extended by a Generate method, it can output any desired schema format: Json, Protobuf, TypeScript modules, Java classes, etc.
+Extended with a Generate method, it can output any desired schema format: Json, Protobuf, TypeScript modules, Java classes, etc.
 
 # Roadmap
 
