@@ -1,5 +1,12 @@
 A generic tool for automatic schema generation for a set of C# classes.
 
+# Example Uses
+
+* Integration between C# code and TypeScript UI.
+* Source controlled database schema, automatically generated at compile-time, for understanding necessary database migration steps.
+
+# Usage
+
 Extended with a set of root types,
 it scans relevant assemblies to understand what types are serializable:
 * Serializable fields and properties of other serializable types.
@@ -10,10 +17,6 @@ It can be extended by any serialization logic that can be inferred by the Member
 * A set of rules on the access modifiers of the field or property.
 
 Extended by a Generate method, it can output any desired schema format: Json, Protobuf, TypeScript modules, Java classes, etc.
-
-Examples of uses:
-* Integration between C# code and TypeScript UI.
-* Source controlled database schema, automatically generated at compile-time, for understanding necessary database migration steps.
 
 # Roadmap
 
