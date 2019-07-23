@@ -4,6 +4,7 @@ A generic tool for automatic schema generation for a set of C# classes.
 
 * Integration between C# code and TypeScript UI.
 * Source controlled database schema, automatically generated at compile-time, for understanding necessary database migration steps.
+* Creating a Protobuf serializer, by adding the serializable types into the RuntimeTypeModel. 
 
 # Algorithm and Usage
 
