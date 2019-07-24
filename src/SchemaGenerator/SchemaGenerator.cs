@@ -18,20 +18,35 @@ namespace SchemaGenerator
     /// </summary>
     public abstract class SchemaGenerator
     {
-        /// <summary>
-        /// All the types in the relevant assemblies
-        /// </summary>
-        private readonly Lazy<HashSet<Type>> _types;
+        private readonly Lazy<HashSet<Type>> _scopeTypes;
+        private readonly Lazy<IReadOnlyCollection<Type>> _serializableTypes;
+        private readonly Func<MemberInfo, bool> _shouldSerializeMember;
 
         /// <summary>
-        /// The types from which the scan should start.
-        /// These can be the basic types that go into the database,
-        /// Types that participate in REST calls, etc.
+        /// The types that are reachable by serialization from the given root types.
         /// </summary>
-        public abstract IReadOnlyCollection<Type> RootTypes { get; }
+        public IReadOnlyCollection<Type> SerializableTypes => _serializableTypes.Value;
 
-        protected SchemaGenerator() =>
-            _types =
+        /// <summary>
+        /// Create an instance of a <see cref="SchemaGenerator"/>.
+        /// </summary>
+        /// <param name="rootTypes">The basic serializable types from which to start scanning,
+        /// e.g. the types of documents in the database.
+        /// or the types that appear in the signatures of REST API calls.</param>
+        /// <param name="isInScope">A method to check whether an assembly is relevant for the schema or an external dependency,
+        /// e.g. does its name contain the solution name.</param>
+        /// <param name="shouldSerializeMember">A method to check whether a member of a serializable type should be included in the schema,
+        /// e.g. does it have a specific serialization attribute.</param>
+        protected SchemaGenerator(
+            IReadOnlyCollection<Type> rootTypes,
+            Func<AssemblyName, bool> isInScope,
+            Func<MemberInfo, bool> shouldSerializeMember)
+        {
+            Ensure.NotNull(nameof(rootTypes), rootTypes);
+            Ensure.NotNull(nameof(isInScope), isInScope);
+            _shouldSerializeMember = Ensure.NotNull(nameof(shouldSerializeMember), shouldSerializeMember);
+
+            _scopeTypes =
                 new Lazy<HashSet<Type>>(
                     () =>
                     {
@@ -39,8 +54,9 @@ namespace SchemaGenerator
                         try
                         {
                             var currentAssemblies =
-                                RootTypes.Select(_ => _.Assembly).
-                                    Where(_ => IsInScope(_.GetName())).
+                                rootTypes.
+                                    Select(_ => _.Assembly).
+                                    Where(_ => isInScope(_.GetName())).
                                     ToList();
                             while (currentAssemblies.Any())
                             {
@@ -48,94 +64,79 @@ namespace SchemaGenerator
                                 currentAssemblies =
                                     currentAssemblies.
                                         SelectMany(_ => _.GetReferencedAssemblies()).
-                                        Where(IsInScope).
+                                        Where(isInScope).
                                         Select(Assembly.Load).
                                         WhereNotNull().
                                         Where(_ => !assemblies.Contains(_)).
                                         ToList();
-
                             }
                         }
                         catch (FileNotFoundException exception)
                         {
                             throw new ExtendedException(
-                                "Could not load a referenced assembly. " +
-                                $"Try limiting {nameof(IsInScope)} method to reachable assemblies.",
+                                $"Could not load a referenced assembly. Try limiting {nameof(isInScope)} method to reachable assemblies.",
                                 exception);
                         }
 
                         return assemblies.
                             SelectMany(_ => _.GetTypes()).
-                            Where(_ => !_.IsSecurityTransparent).
                             ToHashSet();
                     });
 
-        /// <summary>
-        /// Generate a string from the serializable types.
-        /// This may use <see cref="GetSerializableMemberInfos"/> to get the inner member infos of each type.
-        /// </summary>
-        /// <param name="serializableTypes">The types that are reachable by serialization</param>
-        /// <returns>A schema that represents the serializable types, in the desired format</returns>
-        protected abstract string Generate(IReadOnlyCollection<Type> serializableTypes);
+            _serializableTypes =
+                new Lazy<IReadOnlyCollection<Type>>(
+                    () =>
+                    {
+                        var serializableTypes = new HashSet<Type>();
+                        rootTypes.ForEach(_ => AddSerializableType(_, serializableTypes));
+
+                        serializableTypes.
+                            RemoveWhere(
+                                _ =>
+                                    !_scopeTypes.Value.Contains(_) ||
+                                    _.IsGenericType &&
+                                    !_.IsGenericTypeDefinition);
+
+                        return serializableTypes;
+                    });
+        }
 
         /// <summary>
-        /// Is the assembly relevant for the schema.
-        /// Usually contain only assemblies in the same solution.
+        /// Generate a schema for a set of types.
         /// </summary>
-        /// <param name="assemblyName">The assembly name</param>
-        /// <returns>Whether the assembly is relevant for the schema</returns>
-        protected abstract bool IsInScope(AssemblyName assemblyName);
+        /// <param name="types">The types to include in the schema.</param>
+        /// <returns>A schema of the given types.</returns>
+        protected abstract string Generate(IReadOnlyCollection<Type> types);
 
         /// <summary>
-        /// Is <paramref name="memberInfo"/> included in the schema.
+        /// Validate that a set of types complies to some conditions.
         /// </summary>
-        /// <param name="memberInfo">A member of a serializable type</param>
-        /// <returns>Whether the member is included in the schema</returns>
-        /// <example>Does <paramref name="memberInfo"/> have a specific attribute</example>
-        /// <example>Is <paramref name="memberInfo"/> public</example>
-        protected abstract bool ShouldSerializeMember(MemberInfo memberInfo);
-
-        /// <summary>
-        /// Optional validations of serializable types.
-        /// </summary>
-        /// <param name="serializableTypes">all the serializable types</param>
-        /// <example>All types have parameterless constructors</example>
-        protected virtual void ValidateSerializableTypes(IReadOnlyCollection<Type> serializableTypes)
+        /// <param name="types">The types on which to validate the conditions.</param>
+        /// <example>Validate that all types have a parameter-less constructor.</example>
+        /// <example>Validate that all protobuf member indexes are unique.</example>
+        protected virtual void Validate(IReadOnlyCollection<Type> types)
         {
         }
 
         /// <summary>
         /// Generate the schema of all the serializable types.
         /// </summary>
-        /// <returns>The generated schema</returns>
+        /// <returns>The generated schema.</returns>
         public string Generate() =>
-            Generate(GetSerializableTypes());
+            Generate(SerializableTypes);
 
         /// <summary>
-        /// Get they types that are reachable for serialization.
+        /// Validate that all the serializable types comply to some conditions.
+        /// The conditions should be implemented on <see cref="Validate(System.Collections.Generic.IReadOnlyCollection{System.Type})"/>.
         /// </summary>
-        /// <returns>The serializable types</returns>
-        protected IReadOnlyCollection<Type> GetSerializableTypes()
-        {
-            var serializableTypes = new HashSet<Type>();
-            RootTypes.ForEach(_ => AddSerializableType(_, serializableTypes));
-
-            serializableTypes.
-                RemoveWhere(
-                    _ =>
-                        !_types.Value.Contains(_) ||
-                        _.IsGenericType && !_.IsGenericTypeDefinition);
-
-            ValidateSerializableTypes(serializableTypes);
-
-            return serializableTypes;
-        }
+        public void Validate() =>
+            Validate(SerializableTypes);
 
         /// <summary>
-        /// Get the members of the types that return true for <see cref="ShouldSerializeMember"/>.
+        /// Get the members of the types that return true for <see cref="_shouldSerializeMember"/>.
         /// </summary>
-        /// <param name="type">A serializable type</param>
-        /// <returns>The serializable members</returns>
+        /// <param name="type">A serializable type.</param>
+        /// <returns>The serializable members.</returns>
         protected IReadOnlyCollection<MemberInfo> GetSerializableMemberInfos(Type type)
         {
             Ensure.NotNull(nameof(type), type);
@@ -149,16 +150,17 @@ namespace SchemaGenerator
                 GetProperties(bindingFlags).
                 Cast<MemberInfo>().
                 Concat(type.GetFields(bindingFlags)).
-                Where(ShouldSerializeMember).
+                Where(_shouldSerializeMember).
                 ToList();
         }
 
         /// <summary>
         /// Scan a <paramref name="type"/> and add the results of the scan to <paramref name="serializableTypes"/>
         /// </summary>
-        /// <param name="type">The type to scan</param>
-        /// <param name="serializableTypes">The types that have been found so far</param>
-        /// <param name="shouldAddDerivedTypes"><see langword="true"/> if the type is directly referenced in the schema, e.g. one of <see cref="RootTypes"/> or as serialized member of another serializable type</param>
+        /// <param name="type">The type to scan.</param>
+        /// <param name="serializableTypes">The types that have been found so far.</param>
+        /// <param name="shouldAddDerivedTypes"><see langword="true"/> if the type is directly referenced in the schema,
+        /// e.g. one of the root types or as serialized member of another serializable type.</param>
         private void AddSerializableType(
             Type type,
             HashSet<Type> serializableTypes,
@@ -166,7 +168,7 @@ namespace SchemaGenerator
         {
             if (type == null ||
                 !type.IsGenericType &&
-                !_types.Value.Contains(type))
+                !_scopeTypes.Value.Contains(type))
             {
                 return;
             }
@@ -201,8 +203,11 @@ namespace SchemaGenerator
 
             if (shouldAddDerivedTypes)
             {
-                _types.Value.
-                    Where(_ => type.IsAssignableFrom(_) && _ != type).
+                _scopeTypes.Value.
+                    Where(
+                        _ =>
+                            type.IsAssignableFrom(_) &&
+                            _ != type).
                     ForEach(
                         _ =>
                             AddSerializableType(

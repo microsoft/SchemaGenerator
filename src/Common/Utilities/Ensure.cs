@@ -1,18 +1,13 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using Common.Extensions;
+﻿using Common.Extensions;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Common.Utilities
 {
-    /// <summary>
-    /// Several input verifiers.
-    /// </summary>
     [DebuggerStepThrough]
     public static class Ensure
     {
@@ -41,7 +36,21 @@ namespace Common.Utilities
         [AssertionMethod]
         [ContractAnnotation("value: null => stop")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void NotNull(string parameterName, object value)
+        public static object NotNull(string parameterName, object value) =>
+            value ?? throw new ArgumentNullException(parameterName);
+
+        [AssertionMethod]
+        [ContractAnnotation("value: null => stop")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TValue NotNull<TValue>(string parameterName, TValue value) =>
+            value == null
+                ? throw new ArgumentNullException(parameterName)
+                : value;
+
+        [AssertionMethod]
+        [ContractAnnotation("value: null => stop")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void NotNull(string parameterName, Task value)
         {
             if (value == null)
             {
@@ -52,7 +61,7 @@ namespace Common.Utilities
         [AssertionMethod]
         [ContractAnnotation("value: null => stop")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void NotNull<TValue>(string parameterName, TValue value)
+        public static void NotNull<TResult>(string parameterName, Task<TResult> value)
         {
             if (value == null)
             {
@@ -63,40 +72,37 @@ namespace Common.Utilities
         [AssertionMethod]
         [ContractAnnotation("value: null => stop")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void NotNullOrWhiteSpace(string parameterName, string value)
+        public static string NotNullOrWhiteSpace(string parameterName, string value)
         {
             NotNull(parameterName, value);
 
-            if (value.IsNullOrWhiteSpace())
-            {
-                throw new ArgumentException("Value cannot be whitespace", parameterName);
-            }
+            return value.IsNullOrWhiteSpace()
+                ? throw new ArgumentException("Value cannot be whitespace", parameterName)
+                : value;
         }
 
         [AssertionMethod]
         [ContractAnnotation("collection: null => stop")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void NotNullOrEmpty<TItem>(string parameterName, IReadOnlyCollection<TItem> collection)
+        public static IReadOnlyCollection<TItem> NotNullOrEmpty<TItem>(string parameterName, IReadOnlyCollection<TItem> collection)
         {
             NotNull(parameterName, collection);
 
-            if (collection.Count == 0)
-            {
-                throw new ArgumentException("Value cannot be empty", parameterName);
-            }
+            return collection.Count == 0
+                ? throw new ArgumentException("Value cannot be empty", parameterName)
+                : collection;
         }
 
         [AssertionMethod]
         [ContractAnnotation("dictionary: null => stop")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void NotNullOrEmpty<TKey, TValue>(string parameterName, Dictionary<TKey, TValue> dictionary)
+        public static Dictionary<TKey, TValue> NotNullOrEmpty<TKey, TValue>(string parameterName, Dictionary<TKey, TValue> dictionary)
         {
             NotNull(parameterName, dictionary);
 
-            if (dictionary.Count == 0)
-            {
-                throw new ArgumentException("Value cannot be empty", parameterName);
-            }
+            return dictionary.Count == 0
+                ? throw new ArgumentException("Value cannot be empty", parameterName)
+                : dictionary;
         }
     }
 }

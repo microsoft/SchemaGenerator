@@ -14,10 +14,6 @@ namespace Common.Utilities
         {
         }
 
-        protected ExtendedException()
-        {
-        }
-
         protected ExtendedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
