@@ -4,11 +4,34 @@
 using Common.Utilities;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Common.Extensions
 {
     public static class EnumerableExtension
     {
+        public static string ToJoinString<TItem>(
+            this IEnumerable<TItem> enumerable,
+            string delimiter = null)
+        {
+            Ensure.NotNull(nameof(enumerable), enumerable);
+
+            var firstItem = true;
+            var stringBuilder = new StringBuilder();
+            foreach (var item in enumerable)
+            {
+                if (!firstItem)
+                {
+                    stringBuilder.Append(delimiter ?? ",");
+                }
+
+                stringBuilder.Append(item);
+                firstItem = false;
+            }
+
+            return stringBuilder.ToString();
+        }
+
         public static IEnumerable<TItem> WhereNotNull<TItem>(this IEnumerable<TItem> enumerable)
         {
             Ensure.NotNull(nameof(enumerable), enumerable);
