@@ -1,0 +1,66 @@
+{
+  "types": [
+    {
+      "name": "Shape.Point",
+      "baseType": "System.Object",
+      "properties": [
+        {
+          "name": "X",
+          "type": "System.Double"
+        },
+        {
+          "name": "Y",
+          "type": "System.Double"
+        }
+      ]
+    },
+    {
+      "name": "Shape.Polygon",
+      "baseType": "Shape.Shapes",
+      "properties": []
+    },
+    {
+      "name": "Shape.Rectangle",
+      "baseType": "Shape.Polygon",
+      "properties": [
+        {
+          "name": "BottomLeft",
+          "type": "Shape.Point"
+        },
+        {
+          "name": "Height",
+          "type": "System.Double"
+        },
+        {
+          "name": "TopRight",
+          "type": "Shape.Point"
+        },
+        {
+          "name": "Width",
+          "type": "System.Double"
+        }
+      ]
+    },
+    {
+      "name": "Shape.Shapes",
+      "baseType": "System.Object",
+      "properties": [
+        {
+          "name": "Color",
+          "type": "System.Drawing.Color"
+        }
+      ]
+    },
+    {
+      "name": "Shape.Triangle",
+      "baseType": "Shape.Polygon",
+      "properties": [
+        {
+          "name": "Vertexes",
+          "type": "System.Collections.Generic.HashSet<Shape.Point>"
+        }
+      ]
+    }
+  ],
+  "enums": []
+}

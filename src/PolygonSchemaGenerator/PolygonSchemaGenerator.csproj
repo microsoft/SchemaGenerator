@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <StartWorkingDirectory>$(OutDir)</StartWorkingDirectory>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Shape\Shape.csproj" />
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
+  </ItemGroup>
+
+  <!-- Tip: Remove these lines or unload this project while making changes in the SchemaGenerator that can cause it to fail -->
+  <Target Name="GenerateSchema" AfterTargets="AfterBuild">
+    <Exec Command="dotnet $(OutDir)PolygonSchemaGenerator.dll Schemas" />
+  </Target>
+
+</Project>

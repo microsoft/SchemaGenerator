@@ -1,34 +1,40 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using Common.Utilities;
+﻿using Common.Utilities;
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace Common.Extensions
 {
-    public static class MemberInfoExtension
+    public static class TypeExtension
     {
-        /// <summary>
-        /// Get the type of a <see cref="MemberInfo"/>.
-        /// </summary>
-        /// <param name="memberInfo">A <see cref="MemberInfo"/></param>
-        /// <returns>The field type, property type or return type of <paramref name="memberInfo"/></returns>
-        public static Type GetUnderlyingType(this MemberInfo memberInfo)
+        public static string GetDisplayName(
+            this Type type,
+            bool shouldDisplayFullName)
         {
-            Ensure.NotNull(nameof(memberInfo), memberInfo);
+            Ensure.NotNull(nameof(type), type);
 
-            switch (memberInfo)
-            {
-                case FieldInfo fieldInfo:
-                    return fieldInfo.FieldType;
-                case MethodInfo methodInfo:
-                    return methodInfo.ReturnType;
-                case PropertyInfo propertyInfo:
-                    return propertyInfo.PropertyType;
-                default:
-                    throw new UnexpectedException(nameof(MemberInfo), memberInfo.GetType().Name);
-            }
+            var name = shouldDisplayFullName ? type.FullName : type.Name;
+
+            return type.IsGenericType
+                ? $"{name.Split("`", 2)[0]}" +
+                  $"<{type.GetGenericArguments().Select(_ => GetDisplayName(_, shouldDisplayFullName)).ToJoinString()}>"
+                : name;
+        }
+
+        public static bool HasParameterlessConstructor(this Type type)
+        {
+            Ensure.NotNull(nameof(type), type);
+
+            return
+                !type.IsClass ||
+                type.IsArray ||
+                type.GetConstructor(
+                    BindingFlags.Instance |
+                    BindingFlags.Public |
+                    BindingFlags.NonPublic,
+                    null,
+                    Array.Empty<Type>(),
+                    null) != null;
         }
     }
 }
