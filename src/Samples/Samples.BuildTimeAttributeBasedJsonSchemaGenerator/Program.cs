@@ -1,11 +1,10 @@
-﻿using Common.Extensions;
-using Common.Utilities;
-using Shape;
+﻿using SchemaGenerator.Common;
+using SchemaGenerator.Json;
+using SchemaGenerator.Samples.Shape;
 using System;
 using System.IO;
-using Utilities;
 
-namespace PolygonSchemaGenerator
+namespace SchemaGenerator.Samples.BuildTimeAttributeBasedJsonSchemaGenerator
 {
     /// <summary>
     /// This program generates a schema at build time.
@@ -24,21 +23,21 @@ namespace PolygonSchemaGenerator
 
                 var schemaGenerator =
                     new JsonSchemaGenerator(
-                        new[] { typeof(Polygon) },
-                        _ => _.Name.StartsWith(nameof(Shape)),
+                        new[] { typeof(Shape.Shape) },
+                        _ => _.Name.StartsWith("SchemaGenerator.Samples"),
                         _ => _.HasAttribute<SerializeAttribute>());
                 schemaGenerator.Validate();
                 var schema = schemaGenerator.Generate();
 
                 File.WriteAllText(
-                    Path.Combine(commandLineArguments[0], "PolygonSchema.json"),
+                    Path.Combine(commandLineArguments[0], "schema.json"),
                     schema);
             }
             catch (Exception exception)
             {
                 // This format is for the Error List view at Visual Studio
                 Console.WriteLine(
-                    $"Error {nameof(PolygonSchemaGenerator)}: " +
+                    $"Error {nameof(BuildTimeAttributeBasedJsonSchemaGenerator)}: " +
                     $"{exception.ToString().Replace(Environment.NewLine, " | ")}");
                 throw;
             }

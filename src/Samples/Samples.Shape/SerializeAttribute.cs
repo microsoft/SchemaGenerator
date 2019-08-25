@@ -1,7 +1,7 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using System;
 
-namespace Shape
+namespace SchemaGenerator.Samples.Shape
 {
     [MeansImplicitUse]
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]

@@ -16,14 +16,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\Shape\Shape.csproj" />
-    <ProjectReference Include="..\Utilities\Utilities.csproj" />
+    <ProjectReference Include="..\..\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Json\Json.csproj" />
+    <ProjectReference Include="..\Samples.Shape\Samples.Shape.csproj" />
   </ItemGroup>
 
   <!-- Tip: Remove these lines or unload this project while making changes in the SchemaGenerator that can cause it to fail -->
   <Target Name="GenerateSchema" AfterTargets="AfterBuild">
-    <Exec Command="dotnet $(OutDir)PolygonSchemaGenerator.dll Schemas" />
+    <Exec Command="dotnet $(OutDir)SchemaGenerator.Samples.BuildTimeAttributeBasedJsonSchemaGenerator.dll Schemas" />
   </Target>
 
 </Project>

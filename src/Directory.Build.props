@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <ArtifactsPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\artifacts'))</ArtifactsPath>
+    <AssemblyName>SchemaGenerator.$(MSBuildProjectName)</AssemblyName>
+    <BaseIntermediateOutputPath>$(ArtifactsPath)\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)</IntermediateOutputPath>
+    <NugetPackagesPath Condition="'$(NUGET_PACKAGES)' == ''">$(USERPROFILE)\.nuget\packages</NugetPackagesPath>
+    <NugetPackagesPath Condition="'$(NUGET_PACKAGES)' != ''">$(NUGET_PACKAGES)</NugetPackagesPath>
+    <OpenSourcePath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\opensource'))</OpenSourcePath>
+    <OutDir>$(ArtifactsPath)\bin\$(Configuration)</OutDir>
+    <OutputPath>$(OutDir)</OutputPath>
+    <RootNamespace>SchemaGenerator.$(MSBuildProjectName)</RootNamespace>
+  </PropertyGroup>
+</Project>

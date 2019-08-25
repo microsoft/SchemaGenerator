@@ -1,9 +1,8 @@
-﻿using Common.Utilities;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Common.Extensions
+namespace SchemaGenerator.Common
 {
     public static class TypeExtension
     {

@@ -1,7 +1,6 @@
-﻿using Common.Utilities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Common.Extensions
+namespace SchemaGenerator.Common
 {
     public static class DictionaryExtension
     {

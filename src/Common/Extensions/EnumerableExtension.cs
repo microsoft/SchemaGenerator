@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Common.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Common.Extensions
+namespace SchemaGenerator.Common
 {
     public static class EnumerableExtension
     {

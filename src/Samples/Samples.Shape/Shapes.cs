@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Shape
+namespace SchemaGenerator.Samples.Shape
 {
     public abstract class Shape
     {

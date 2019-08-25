@@ -1,15 +1,14 @@
-﻿using Common.Extensions;
-using Common.Utilities;
-using MoreLinq;
+﻿using MoreLinq;
 using Newtonsoft.Json.Linq;
+using SchemaGenerator.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Utilities
+namespace SchemaGenerator.Json
 {
-    public sealed class JsonSchemaGenerator : SchemaGenerator.SchemaGenerator
+    public sealed class JsonSchemaGenerator : SchemaGenerator
     {
         private readonly bool _shouldDisplayFullName;
         private readonly IDictionary<Type, Type> _typeToConvertedTypeMapping;
@@ -120,11 +119,12 @@ namespace Utilities
             if (!_shouldDisplayFullName && duplicateNameTypes.Any() ||
                 missingParameterlessConstructorTypes.Any())
             {
-                throw new ExtendedException("Found faulty types [" +
-                                            (_shouldDisplayFullName
-                                                ? ""
-                                                : $"{nameof(duplicateNameTypes)}={duplicateNameTypes.ToJoinString()} ") +
-                                            $"{nameof(missingParameterlessConstructorTypes)}={missingParameterlessConstructorTypes.ToJoinString()}]");
+                throw new ExtendedException(
+                    "Found faulty types [" +
+                    (_shouldDisplayFullName
+                    ? ""
+                    : $"{nameof(duplicateNameTypes)}={duplicateNameTypes.ToJoinString()} ") +
+                    $"{nameof(missingParameterlessConstructorTypes)}={missingParameterlessConstructorTypes.ToJoinString()}]");
             }
         }
     }

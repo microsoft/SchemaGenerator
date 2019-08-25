@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Common.Utilities;
 
-namespace Common.Extensions
+namespace SchemaGenerator.Common
 {
     public static class StringExtension
     {

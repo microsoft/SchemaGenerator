@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Common.Extensions;
-using Common.Utilities;
 using MoreLinq;
+using SchemaGenerator.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +19,8 @@ namespace SchemaGenerator
     {
         private readonly Lazy<HashSet<Type>> _scopeTypes;
         private readonly Lazy<IReadOnlyCollection<Type>> _serializableTypes;
-        private readonly Func<MemberInfo, bool> _shouldSerializeMember;
+
+        protected Func<MemberInfo, bool> ShouldSerializeMember { get; }
 
         /// <summary>
         /// The types that are reachable by serialization from the given root types.
@@ -44,7 +44,7 @@ namespace SchemaGenerator
         {
             Ensure.NotNull(nameof(rootTypes), rootTypes);
             Ensure.NotNull(nameof(isInScope), isInScope);
-            _shouldSerializeMember = Ensure.NotNull(nameof(shouldSerializeMember), shouldSerializeMember);
+            ShouldSerializeMember = Ensure.NotNull(nameof(shouldSerializeMember), shouldSerializeMember);
 
             _scopeTypes =
                 new Lazy<HashSet<Type>>(
@@ -133,7 +133,7 @@ namespace SchemaGenerator
             Validate(SerializableTypes);
 
         /// <summary>
-        /// Get the members of the types that return true for <see cref="_shouldSerializeMember"/>.
+        /// Get the members of the types that return true for <see cref="ShouldSerializeMember"/>.
         /// </summary>
         /// <param name="type">A serializable type.</param>
         /// <returns>The serializable members.</returns>
@@ -150,7 +150,7 @@ namespace SchemaGenerator
                 GetProperties(bindingFlags).
                 Cast<MemberInfo>().
                 Concat(type.GetFields(bindingFlags)).
-                Where(_shouldSerializeMember).
+                Where(ShouldSerializeMember).
                 ToList();
         }
 

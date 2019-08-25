@@ -1,4 +1,4 @@
-﻿namespace Shape
+﻿namespace SchemaGenerator.Samples.Shape
 {
     public class Point
     {

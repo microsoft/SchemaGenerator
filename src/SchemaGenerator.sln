@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.102
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchemaGenerator", "SchemaGenerator\SchemaGenerator.csproj", "{944113AC-74F2-4CDF-9F1B-26F38185C9C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Json", "Json\Json.csproj", "{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{5F7C6C97-9EC9-4ECF-BC55-98DADECFDBEF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompileTimeSchemaGenerator", "CompileTimeSchemaGenerator", "{028D768F-4FB7-4E5D-B951-7414A77A354A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Shape", "Samples\Samples.Shape\Samples.Shape.csproj", "{1811FB7B-8F1D-4BF5-A588-93D6B4BE51EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shape", "Shape\Shape.csproj", "{1811FB7B-8F1D-4BF5-A588-93D6B4BE51EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.BuildTimeAttributeBasedJsonSchemaGenerator", "Samples\Samples.BuildTimeAttributeBasedJsonSchemaGenerator\Samples.BuildTimeAttributeBasedJsonSchemaGenerator.csproj", "{B0DF3922-6429-4B16-90C5-32D30CC29793}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolygonSchemaGenerator", "PolygonSchemaGenerator\PolygonSchemaGenerator.csproj", "{B0DF3922-6429-4B16-90C5-32D30CC29793}"
 EndProject
@@ -48,9 +48,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{028D768F-4FB7-4E5D-B951-7414A77A354A} = {5F7C6C97-9EC9-4ECF-BC55-98DADECFDBEF}
-		{1811FB7B-8F1D-4BF5-A588-93D6B4BE51EF} = {028D768F-4FB7-4E5D-B951-7414A77A354A}
-		{B0DF3922-6429-4B16-90C5-32D30CC29793} = {028D768F-4FB7-4E5D-B951-7414A77A354A}
+		{1811FB7B-8F1D-4BF5-A588-93D6B4BE51EF} = {5F7C6C97-9EC9-4ECF-BC55-98DADECFDBEF}
+		{B0DF3922-6429-4B16-90C5-32D30CC29793} = {5F7C6C97-9EC9-4ECF-BC55-98DADECFDBEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73C7CA23-DDA3-4A68-AFCF-498A442496BE}
