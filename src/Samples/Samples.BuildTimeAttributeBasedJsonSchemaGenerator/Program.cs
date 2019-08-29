@@ -25,8 +25,9 @@ namespace SchemaGenerator.Samples.BuildTimeAttributeBasedJsonSchemaGenerator
                 var schemaGenerator =
                     new JsonSchemaGenerator(
                         new[] { typeof(Shape.Shape) },
-                        _ => _.Name.StartsWith($"{nameof(SchemaGenerator)}.{nameof(Samples)})"),
-                        _ => _.HasAttribute<SerializeAttribute>());
+                        assemblyName =>
+                            assemblyName.Name.StartsWith($"{nameof(SchemaGenerator)}.{nameof(Samples)})"),
+                        memberInfo => memberInfo.HasAttribute<SerializeAttribute>());
                 schemaGenerator.Validate();
                 var schema = schemaGenerator.Generate();
 

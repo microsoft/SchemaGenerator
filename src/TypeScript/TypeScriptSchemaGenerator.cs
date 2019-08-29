@@ -32,7 +32,7 @@ namespace SchemaGenerator.TypeScript
         {
             var typeScriptFluent =
                 TypeLiteTypeScript.Definitions().
-                    WithShouldIgnoreMemberPredicate(_ => !ShouldSerializeMember(_)).
+                    WithShouldIgnoreMemberPredicate(memberInfo => !ShouldSerializeMember(memberInfo)).
                     WithShouldIncludeAllEnums(false).
                     AsCollectionDictionaries(false).
                     AsConstEnums().
@@ -46,10 +46,10 @@ namespace SchemaGenerator.TypeScript
 
             var serializableTypes =
                 types.
-                    Where(_ => !typeof(IEnumerable).IsAssignableFrom(_)).
+                    Where(type => !typeof(IEnumerable).IsAssignableFrom(type)).
                     ToList();
 
-            serializableTypes.ForEach(_ => typeScriptFluent.For(_));
+            serializableTypes.ForEach(type => typeScriptFluent.For(type));
 
             return $"{typeScriptFluent.Generate().TrimStart().Replace("\t", "    ")}" +
                    $"{GenerateImports(serializableTypes)}";
@@ -62,9 +62,9 @@ namespace SchemaGenerator.TypeScript
             var duplicateNameTypes =
                 types.
                     Distinct().
-                    GroupBy(_ => _.Name).
-                    Where(_ => _.Count() > 1).
-                    Select(_ => _.Key).
+                    GroupBy(type => type.Name).
+                    Where(nameToTypes => nameToTypes.Count() > 1).
+                    Select(nameToTypes => nameToTypes.Key).
                     ToList();
             if (_shortcutSchemaName != null && duplicateNameTypes.Any())
             {
@@ -84,13 +84,13 @@ namespace SchemaGenerator.TypeScript
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"declare namespace {_shortcutSchemaName} {{");
             types.ToDictionary(
-                _ => 
-                     _.IsGenericType
-                         ? _.Name.Split("`", 2).
+                type => 
+                     type.IsGenericType
+                         ? type.Name.Split("`", 2).
                              First()
-                         : _.Name).
-                OrderBy(_ => _.Key).
-                ForEach(_ => stringBuilder.AppendLine($"    export import {_.Key} = {_.Value.Namespace}.{_.Key};"));
+                         : type.Name).
+                OrderBy(nameToType => nameToType.Key).
+                ForEach(nameToType => stringBuilder.AppendLine($"    export import {nameToType.Key} = {nameToType.Value.Namespace}.{nameToType.Key};"));
             stringBuilder.Append("}");
             return stringBuilder.ToString();
         }

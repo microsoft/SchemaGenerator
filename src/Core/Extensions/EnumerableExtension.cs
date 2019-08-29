@@ -36,7 +36,7 @@ namespace SchemaGenerator.Core.Extensions
         {
             Ensure.NotNull(nameof(enumerable), enumerable);
 
-            return enumerable.Where(_ => _ != null);
+            return enumerable.Where(item => item != null);
         }
     }
 }

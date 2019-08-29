@@ -17,7 +17,7 @@ namespace SchemaGenerator.Core.Extensions
 
             return type.IsGenericType
                 ? $"{name.Split("`", 2)[0]}" +
-                  $"<{type.GetGenericArguments().Select(_ => GetDisplayName(_, shouldDisplayFullName)).ToJoinString()}>"
+                  $"<{type.GetGenericArguments().Select(argumentType => GetDisplayName(argumentType, shouldDisplayFullName)).ToJoinString()}>"
                 : name;
         }
 

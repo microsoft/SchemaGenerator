@@ -56,19 +56,19 @@ namespace SchemaGenerator.Core
                         {
                             var currentAssemblies =
                                 rootTypes.
-                                    Select(_ => _.Assembly).
-                                    Where(_ => isInScope(_.GetName())).
+                                    Select(type => type.Assembly).
+                                    Where(assembly => isInScope(assembly.GetName())).
                                     ToList();
                             while (currentAssemblies.Any())
                             {
                                 assemblies.UnionWith(currentAssemblies);
                                 currentAssemblies =
                                     currentAssemblies.
-                                        SelectMany(_ => _.GetReferencedAssemblies()).
+                                        SelectMany(assembly => assembly.GetReferencedAssemblies()).
                                         Where(isInScope).
                                         Select(Assembly.Load).
                                         WhereNotNull().
-                                        Where(_ => !assemblies.Contains(_)).
+                                        Where(assembly => !assemblies.Contains(assembly)).
                                         ToList();
                             }
                         }
@@ -80,7 +80,7 @@ namespace SchemaGenerator.Core
                         }
 
                         return assemblies.
-                            SelectMany(_ => _.GetTypes()).
+                            SelectMany(assembly => assembly.GetTypes()).
                             ToHashSet();
                     });
 
@@ -89,14 +89,14 @@ namespace SchemaGenerator.Core
                     () =>
                     {
                         var serializableTypes = new HashSet<Type>();
-                        rootTypes.ForEach(_ => AddSerializableType(_, serializableTypes));
+                        rootTypes.ForEach(type => AddSerializableType(type, serializableTypes));
 
                         serializableTypes.
                             RemoveWhere(
-                                _ =>
-                                    !_scopeTypes.Value.Contains(_) ||
-                                    _.IsGenericType &&
-                                    !_.IsGenericTypeDefinition);
+                                type =>
+                                    !_scopeTypes.Value.Contains(type) ||
+                                    type.IsGenericType &&
+                                    !type.IsGenericTypeDefinition);
 
                         return serializableTypes;
                     });
@@ -196,23 +196,23 @@ namespace SchemaGenerator.Core
                 }
 
                 GetSerializableMemberInfos(type).
-                    Select(_ => _.GetUnderlyingType()).
+                    Select(memberInfo => memberInfo.GetUnderlyingType()).
                     Concat(type.GetGenericArguments()).
                     Distinct().
-                    ForEach(_ => AddSerializableType(_, serializableTypes));
+                    ForEach(memberType => AddSerializableType(memberType, serializableTypes));
             }
 
             if (shouldAddDerivedTypes)
             {
                 _scopeTypes.Value.
                     Where(
-                        _ =>
-                            type.IsAssignableFrom(_) &&
-                            _ != type).
+                        scopeType =>
+                            type.IsAssignableFrom(scopeType) &&
+                            scopeType != type).
                     ForEach(
-                        _ =>
+                        derivedType =>
                             AddSerializableType(
-                                _,
+                                derivedType,
                                 serializableTypes,
                                 false));
             }

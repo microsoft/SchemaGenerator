@@ -10,7 +10,7 @@ namespace SchemaGenerator.Core.Extensions
             Ensure.NotNull(nameof(dictionary), dictionary);
 
             return !dictionary.TryGetValue(key, out var value)
-                ? default(TValue)
+                ? default
                 : value;
         }
     }

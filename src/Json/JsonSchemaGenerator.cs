@@ -46,23 +46,23 @@ namespace SchemaGenerator.Json
         {
             types =
                 types.
-                    OrderBy(_ => _.Name).
+                    OrderBy(type => type.Name).
                     ToList();
 
             var typeJObjects = new JArray();
-            foreach (var type in types.Where(_ => !_.IsEnum))
+            foreach (var type in types.Where(type => !type.IsEnum))
             {
                 var propertyJObjects = new JArray();
                 GetSerializableMemberInfos(type).
-                    OrderBy(_ => _.Name).
+                    OrderBy(memberInfo => memberInfo.Name).
                     ForEach(
-                        _ =>
+                        memberInfo =>
                         {
-                            var memberUnderlyingType = _.GetUnderlyingType();
+                            var memberUnderlyingType = memberInfo.GetUnderlyingType();
                             propertyJObjects.Add(
                                 new JObject
                                 {
-                                    { "name", _.Name },
+                                    { "name", memberInfo.Name },
                                     {
                                         "type",
                                         (_typeToConvertedTypeMapping.GetValueOrDefault(memberUnderlyingType) ?? memberUnderlyingType).
@@ -81,7 +81,7 @@ namespace SchemaGenerator.Json
             }
 
             var enumJObjects = new JArray();
-            foreach (var enumType in types.Where(_ => _.IsEnum))
+            foreach (var enumType in types.Where(type => type.IsEnum))
             {
                 enumJObjects.Add(
                     new JObject
@@ -109,13 +109,13 @@ namespace SchemaGenerator.Json
             var duplicateNameTypes =
                 serializableTypes.
                     Distinct().
-                    GroupBy(_ => _.Name).
-                    Where(_ => _.Count() > 1).
-                    Select(_ => _.Key).
+                    GroupBy(type => type.Name).
+                    Where(nameToTypes => nameToTypes.Count() > 1).
+                    Select(nameToTypes => nameToTypes.Key).
                     ToList();
             var missingParameterlessConstructorTypes =
                 serializableTypes.
-                    Where(_ => !_.HasParameterlessConstructor() && !_.IsAbstract).
+                    Where(type => !type.HasParameterlessConstructor() && !type.IsAbstract).
                     ToList();
             if (!_shouldDisplayFullName && duplicateNameTypes.Any() ||
                 missingParameterlessConstructorTypes.Any())

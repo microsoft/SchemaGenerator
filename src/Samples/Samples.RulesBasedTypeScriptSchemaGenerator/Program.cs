@@ -13,17 +13,18 @@ namespace SchemaGenerator.Samples.RulesBasedTypeScriptSchemaGenerator
             var schemaGenerator =
                 new TypeScriptSchemaGenerator(
                     new[] { typeof(Polygon) },
-                    _ => _.Name.StartsWith($"{nameof(SchemaGenerator)}.{nameof(Samples)}"),
-                    _ =>
+                    assemblyName =>
+                        assemblyName.Name.StartsWith($"{nameof(SchemaGenerator)}.{nameof(Samples)}"),
+                    memberInfo =>
                     {
-                        switch (_)
+                        switch (memberInfo)
                         {
                             case FieldInfo fieldInfo:
                                 return fieldInfo.IsPublic;
                             case PropertyInfo propertyInfo:
                                 return propertyInfo.GetMethod != null && propertyInfo.SetMethod != null;
                             default:
-                                throw new UnexpectedException(nameof(MemberInfo), _.GetType().Name);
+                                throw new UnexpectedException(nameof(MemberInfo), memberInfo.GetType().Name);
                         }
                     });
             schemaGenerator.Validate();
