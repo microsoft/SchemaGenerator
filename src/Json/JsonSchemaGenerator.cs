@@ -1,14 +1,15 @@
 ﻿using MoreLinq;
 using Newtonsoft.Json.Linq;
-using SchemaGenerator.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using SchemaGenerator.Core.Extensions;
+using SchemaGenerator.Core.Utilities;
 
 namespace SchemaGenerator.Json
 {
-    public sealed class JsonSchemaGenerator : SchemaGenerator
+    public sealed class JsonSchemaGenerator : Core.SchemaGenerator
     {
         private readonly bool _shouldDisplayFullName;
         private readonly IDictionary<Type, Type> _typeToConvertedTypeMapping;

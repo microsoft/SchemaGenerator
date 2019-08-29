@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using SchemaGenerator.Core.Utilities;
 using System;
 using System.Reflection;
 
-namespace SchemaGenerator.Common
+namespace SchemaGenerator.Core.Extensions
 {
     public static class MemberInfoExtension
     {

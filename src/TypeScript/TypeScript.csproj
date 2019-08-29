@@ -2,10 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Ofer Rothschild</Authors>
+    <Company>Microsoft</Company>
+    <Product>SchemaGenerator</Product>
+    <RepositoryUrl>https://github.com/microsoft/schemagenerator</RepositoryUrl>
+    <Description>A generic tool for automatic schema generation for a set of .Net classes</Description>
+    <PackageTags>schema generator validation json TypeScript protobuf migration C# .net</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SchemaGenerator\SchemaGenerator.csproj" />
+    <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

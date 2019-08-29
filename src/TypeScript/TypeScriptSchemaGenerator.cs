@@ -1,5 +1,6 @@
 ﻿using MoreLinq;
-using SchemaGenerator.Common;
+using SchemaGenerator.Core.Extensions;
+using SchemaGenerator.Core.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using TypeLiteTypeScript = TypeLite.TypeScript;
 
 namespace SchemaGenerator.TypeScript
 {
-    public sealed class TypeScriptSchemaGenerator : SchemaGenerator
+    public sealed class TypeScriptSchemaGenerator : Core.SchemaGenerator
     {
         private readonly string _shortcutSchemaName;
 

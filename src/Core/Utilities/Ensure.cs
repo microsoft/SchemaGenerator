@@ -1,11 +1,12 @@
 ﻿using JetBrains.Annotations;
+using SchemaGenerator.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace SchemaGenerator.Common
+namespace SchemaGenerator.Core.Utilities
 {
     [DebuggerStepThrough]
     public static class Ensure

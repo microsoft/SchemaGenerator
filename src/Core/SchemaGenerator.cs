@@ -2,14 +2,15 @@
 // Licensed under the MIT License.
 
 using MoreLinq;
-using SchemaGenerator.Common;
+using SchemaGenerator.Core.Extensions;
+using SchemaGenerator.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace SchemaGenerator
+namespace SchemaGenerator.Core
 {
     /// <summary>
     /// This is a base class for a schema generator.

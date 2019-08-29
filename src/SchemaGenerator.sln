@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchemaGenerator", "SchemaGenerator\SchemaGenerator.csproj", "{944113AC-74F2-4CDF-9F1B-26F38185C9C6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{944113AC-74F2-4CDF-9F1B-26F38185C9C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Json", "Json\Json.csproj", "{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}"
 EndProject
@@ -29,10 +27,6 @@ Global
 		{944113AC-74F2-4CDF-9F1B-26F38185C9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{944113AC-74F2-4CDF-9F1B-26F38185C9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{944113AC-74F2-4CDF-9F1B-26F38185C9C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}.Release|Any CPU.ActiveCfg = Release|Any CPU

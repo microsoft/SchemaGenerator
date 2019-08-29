@@ -1,4 +1,5 @@
-﻿using SchemaGenerator.Common;
+﻿using SchemaGenerator.Core.Extensions;
+using SchemaGenerator.Core.Utilities;
 using SchemaGenerator.Json;
 using SchemaGenerator.Samples.Shape;
 using System;
@@ -24,7 +25,7 @@ namespace SchemaGenerator.Samples.BuildTimeAttributeBasedJsonSchemaGenerator
                 var schemaGenerator =
                     new JsonSchemaGenerator(
                         new[] { typeof(Shape.Shape) },
-                        _ => _.Name.StartsWith("SchemaGenerator.Samples"),
+                        _ => _.Name.StartsWith($"{nameof(SchemaGenerator)}.{nameof(Samples)})"),
                         _ => _.HasAttribute<SerializeAttribute>());
                 schemaGenerator.Validate();
                 var schema = schemaGenerator.Generate();

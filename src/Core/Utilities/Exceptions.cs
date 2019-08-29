@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace SchemaGenerator.Common
+namespace SchemaGenerator.Core.Utilities
 {
     [Serializable]
     public class ExtendedException : Exception

@@ -1,4 +1,4 @@
-﻿using SchemaGenerator.Common;
+﻿using SchemaGenerator.Core.Utilities;
 using SchemaGenerator.Samples.Shape;
 using SchemaGenerator.TypeScript;
 using System;
@@ -13,7 +13,7 @@ namespace SchemaGenerator.Samples.RulesBasedTypeScriptSchemaGenerator
             var schemaGenerator =
                 new TypeScriptSchemaGenerator(
                     new[] { typeof(Polygon) },
-                    _ => _.Name.StartsWith("SchemaGenerator.Samples"),
+                    _ => _.Name.StartsWith($"{nameof(SchemaGenerator)}.{nameof(Samples)}"),
                     _ =>
                     {
                         switch (_)
