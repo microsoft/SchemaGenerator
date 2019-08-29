@@ -1,4 +1,5 @@
 ﻿using SchemaGenerator.Common;
+using SchemaGenerator.Json;
 using SchemaGenerator.Samples.Shape;
 using System;
 using System.IO;

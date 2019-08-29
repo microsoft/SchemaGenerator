@@ -1,5 +1,6 @@
 ﻿using SchemaGenerator.Common;
 using SchemaGenerator.Samples.Shape;
+using SchemaGenerator.TypeScript;
 using System;
 using System.Reflection;
 

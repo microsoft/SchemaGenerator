@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace SchemaGenerator
+namespace SchemaGenerator.Json
 {
     public sealed class JsonSchemaGenerator : SchemaGenerator
     {

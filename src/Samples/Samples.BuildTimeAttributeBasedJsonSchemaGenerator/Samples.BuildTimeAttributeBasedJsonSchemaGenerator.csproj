@@ -16,7 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SchemaGenerator\SchemaGenerator.csproj" />
+    <ProjectReference Include="..\..\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Json\Json.csproj" />
     <ProjectReference Include="..\Samples.Shape\Samples.Shape.csproj" />
   </ItemGroup>
 
