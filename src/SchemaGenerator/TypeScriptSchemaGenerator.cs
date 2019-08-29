@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using TypeLiteTypeScript = TypeLite.TypeScript;
+using TypeLite;
 
-namespace SchemaGenerator.TypeScript
+namespace SchemaGenerator
 {
     public sealed class TypeScriptSchemaGenerator : SchemaGenerator
     {
@@ -30,7 +30,7 @@ namespace SchemaGenerator.TypeScript
         protected override string Generate(IReadOnlyCollection<Type> types)
         {
             var typeScriptFluent =
-                TypeLiteTypeScript.Definitions().
+                TypeScript.Definitions().
                     WithShouldIgnoreMemberPredicate(_ => !ShouldSerializeMember(_)).
                     WithShouldIncludeAllEnums(false).
                     AsCollectionDictionaries(false).

@@ -7,15 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchemaGenerator", "SchemaGe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Json", "Json\Json.csproj", "{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{5F7C6C97-9EC9-4ECF-BC55-98DADECFDBEF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Shape", "Samples\Samples.Shape\Samples.Shape.csproj", "{1811FB7B-8F1D-4BF5-A588-93D6B4BE51EF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.BuildTimeAttributeBasedJsonSchemaGenerator", "Samples\Samples.BuildTimeAttributeBasedJsonSchemaGenerator\Samples.BuildTimeAttributeBasedJsonSchemaGenerator.csproj", "{B0DF3922-6429-4B16-90C5-32D30CC29793}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeScript", "TypeScript\TypeScript.csproj", "{BCCEE7F6-8FCE-4D48-910B-CCFACA6AF2C9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.RulesBasedTypeScriptSchemaGenerator", "Samples\Samples.RulesBasedTypeScriptSchemaGenerator\Samples.RulesBasedTypeScriptSchemaGenerator.csproj", "{B1FAE8C0-16FD-439E-B979-0DB37604A5A0}"
 EndProject
@@ -33,10 +29,6 @@ Global
 		{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BE3B417-F6DE-4B30-96D5-1C47E3E84378}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2CAAE42-E1A1-4AF1-B24C-91AF34E90856}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1811FB7B-8F1D-4BF5-A588-93D6B4BE51EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1811FB7B-8F1D-4BF5-A588-93D6B4BE51EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1811FB7B-8F1D-4BF5-A588-93D6B4BE51EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,10 +37,6 @@ Global
 		{B0DF3922-6429-4B16-90C5-32D30CC29793}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0DF3922-6429-4B16-90C5-32D30CC29793}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0DF3922-6429-4B16-90C5-32D30CC29793}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BCCEE7F6-8FCE-4D48-910B-CCFACA6AF2C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCCEE7F6-8FCE-4D48-910B-CCFACA6AF2C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCCEE7F6-8FCE-4D48-910B-CCFACA6AF2C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCCEE7F6-8FCE-4D48-910B-CCFACA6AF2C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1FAE8C0-16FD-439E-B979-0DB37604A5A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1FAE8C0-16FD-439E-B979-0DB37604A5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1FAE8C0-16FD-439E-B979-0DB37604A5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU

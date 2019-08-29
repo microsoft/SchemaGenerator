@@ -4,10 +4,29 @@
     <LangVersion>latest</LangVersion>
     <StartWorkingDirectory>$(OutDir)</StartWorkingDirectory>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>Microsoft</Company>
+    <Authors>Ofer Rothschild</Authors>
+    <Product>SchemaGenerator</Product>
+    <PackageId>GenericSchemaGenerator</PackageId>
+    <Copyright></Copyright>
+    <PackageLicenseFile></PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/microsoft/schemagenerator</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/microsoft/schemagenerator</RepositoryUrl>
+    <Description>A generic tool for automatic schema generation for a set of .Net classes</Description>
+    <PackageTags>schema generator validation json TypeScript protobuf migration C# .net</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="morelinq" Version="3.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TypeLite">
+      <HintPath>$(OpenSourcePath)\TypeLite\TypeLite.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
