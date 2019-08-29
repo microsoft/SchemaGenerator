@@ -14,9 +14,12 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="SchemaGenerator.Json" Version="1.0.0" />
+  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Json\Json.csproj" />
     <ProjectReference Include="..\Samples.Shape\Samples.Shape.csproj" />
   </ItemGroup>
 

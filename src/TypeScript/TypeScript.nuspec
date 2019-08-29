@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SchemaGenerator.TypeScript</id>
+        <version>1.0.1</version>
+        <title>SchemaGenerator.TypesScript</title>
+        <authors>Ofer Rothschild</authors>
+        <license type="expression">MIT</license>
+        <projectUrl>https://github.com/microsoft/schemagenerator</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A generic tool for automatic schema generation for a set of .Net classes</description>
+        <copyright></copyright>
+        <tags>schema generator validation json TypeScript protobuf migration C# .net</tags>
+    </metadata>
+    <files>
+        <file src="..\..\artifacts\bin\Debug\TypeLite.dll" target="TypeLite.dll" />
+        <file src="..\..\artifacts\bin\Debug\SchemaGenerator.TypeScript.dll" target="SchemaGenerator.TypeScript.dll" />
+    </files>
+</package>

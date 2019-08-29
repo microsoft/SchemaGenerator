@@ -3,7 +3,7 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <StartWorkingDirectory>$(OutDir)</StartWorkingDirectory>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net47</TargetFramework>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
