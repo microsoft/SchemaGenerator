@@ -1,5 +1,7 @@
 A generic tool for automatic schema generation for a set of C# classes.
+
 https://www.nuget.org/packages/SchemaGenerator.Core/
+
 https://www.nuget.org/packages/SchemaGenerator.Json/
 
 # Example Uses
