@@ -1,4 +1,6 @@
 A generic tool for automatic schema generation for a set of C# classes.
+https://www.nuget.org/packages/SchemaGenerator.Core/
+https://www.nuget.org/packages/SchemaGenerator.Json/
 
 # Example Uses
 
@@ -20,9 +22,7 @@ Extended with a Generate method, it can output any desired schema format: Json, 
 
 # Roadmap
 
-* Sample uses
-* Extended classes for Json and other serialization methods
-* Nuget package
+* A Nuget package for a TypeScript implementation
 * Better documentation
 
 # Contributing
