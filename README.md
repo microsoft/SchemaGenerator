@@ -18,7 +18,7 @@ Consider the following class:
 ```csharp
 public class Apple
 {
-    [UsedImplicitly] public int SeedCount { get; set; }
+    public int SeedCount { get; set; }
 }
 ```
 
