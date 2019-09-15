@@ -12,11 +12,30 @@ using System.Reflection;
 
 namespace SchemaGenerator.Core
 {
+    public interface ISchemaGenerator
+    {
+        /// <summary>
+        /// The types that are reachable by serialization from the given root types.
+        /// </summary>
+        IReadOnlyCollection<Type> SerializableTypes { get; }
+
+        /// <summary>
+        /// Generate the schema of all the serializable types.
+        /// </summary>
+        /// <returns>The generated schema.</returns>
+        string Generate();
+
+        /// <summary>
+        /// Validate that all the serializable types comply to some conditions.
+        /// </summary>
+        void Validate();
+    }
+
     /// <summary>
     /// This is a base class for a schema generator.
     /// It can be extended by specific types of schemas.
     /// </summary>
-    public abstract class SchemaGenerator
+    public abstract class SchemaGenerator : ISchemaGenerator
     {
         private readonly Lazy<HashSet<Type>> _scopeTypes;
         private readonly Lazy<IReadOnlyCollection<Type>> _serializableTypes;

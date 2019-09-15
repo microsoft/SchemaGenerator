@@ -1,20 +1,30 @@
-﻿using SchemaGenerator.Core.Utilities;
-using SchemaGenerator.Samples.Shape;
+﻿using FluentAssertions;
+using JetBrains.Annotations;
+using SchemaGenerator.Core.Utilities;
 using SchemaGenerator.TypeScript;
-using System;
 using System.Reflection;
+using Xunit;
 
-namespace SchemaGenerator.Samples.RulesBasedTypeScriptSchemaGenerator
+namespace SchemaGenerator.Tests
 {
-    public class Program
+    public class TypeScriptTest
     {
-        public static void Main()
+        [Fact]
+        public void BasicTest()
         {
+            const string expectedSchema = @"declare namespace SchemaGenerator.Tests {
+    interface TypeScriptTestA {
+        A: number;
+    }
+}
+declare namespace Schema {
+    export import TypeScriptTestA = SchemaGenerator.Tests.TypeScriptTestA;
+}";
+
             var schemaGenerator =
                 new TypeScriptSchemaGenerator(
-                    new[] { typeof(Polygon) },
-                    assemblyName =>
-                        assemblyName.Name.StartsWith($"{nameof(SchemaGenerator)}.{nameof(Samples)}"),
+                    new[] {typeof(TypeScriptTestA)},
+                    assemblyName => assemblyName.Name == $"{nameof(SchemaGenerator)}.{nameof(Tests)}",
                     memberInfo =>
                     {
                         switch (memberInfo)
@@ -27,10 +37,15 @@ namespace SchemaGenerator.Samples.RulesBasedTypeScriptSchemaGenerator
                                 throw new UnexpectedException(nameof(MemberInfo), memberInfo.GetType().Name);
                         }
                     });
-            schemaGenerator.Validate();
+
             var schema = schemaGenerator.Generate();
 
-            Console.WriteLine(schema);
+            schema.Should().Be(expectedSchema);
         }
+    }
+
+    public class TypeScriptTestA
+    {
+        [UsedImplicitly] public int A { get; set; }
     }
 }
