@@ -1,16 +1,41 @@
+# SchemaGenerator [![Build status](https://ci.appveyor.com/api/projects/status/vs2rba346i5ug7bi?svg=true)]
+
 A generic tool for automatic schema generation for a set of C# classes.
 
 https://www.nuget.org/packages/SchemaGenerator.Core/
 
 https://www.nuget.org/packages/SchemaGenerator.Json/
 
-# Example Uses
+## Example Uses
 
 * Integration between C# code and TypeScript UI.
 * Source controlled database schema, automatically generated at compile-time, for understanding necessary database migration steps.
 * Creating Protobuf serializers more easily. 
 
-# Algorithm and Usage
+## Getting Started
+
+Consider the following class:
+```csharp
+public class Apple
+{
+    [UsedImplicitly] public int SeedCount { get; set; }
+}
+```
+
+you can create a JSON schema like that:
+```csharp
+var schemaGenerator =
+    new JsonSchemaGenerator(
+        new[] { typeof(Apple) },
+        assemblyName => assemblyName.Name == typeof(Apple).Assembly.GetName(),
+        memberInfo => memberInfo.HasAttribute<SerializeAttribute>());
+schemaGenerator.Validate();
+var schema = schemaGenerator.Generate();
+```
+
+If you want to create another type of schema, create a custom generator by extending Core.SchemaGenerator.
+
+## Algorithm and Usage
 
 Extended with a set of root types, the generator scans relevant assemblies to understand what types are serializable:
 * Serializable fields and properties of other serializable types.
@@ -22,12 +47,13 @@ It can be extended to support any serialization logic that can be inferred by th
 
 Extended with a Generate method, it can output any desired schema format: Json, Protobuf, TypeScript modules, Java classes, etc.
 
-# Roadmap
+## Roadmap
 
 * A Nuget package for a TypeScript implementation
+* More tests
 * Better documentation
 
-# Contributing
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
@@ -41,7 +67,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-# Reporting Security Issues
+## Reporting Security Issues
 
 Security issues and bugs should be reported privately, via email, to the Microsoft Security
 Response Center (MSRC) at [secure@microsoft.com](mailto:secure@microsoft.com). You should
