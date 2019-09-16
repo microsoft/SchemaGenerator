@@ -1,4 +1,4 @@
-# SchemaGenerator ![Build status](https://ci.appveyor.com/api/projects/status/vs2rba346i5ug7bi?svg=true)
+# SchemaGenerator
 
 A generic tool for automatic schema generation for a set of C# classes.
 
