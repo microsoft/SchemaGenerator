@@ -42,8 +42,8 @@ Extended with a set of root types, the generator scans relevant assemblies to un
 * Base classes and derived classes of serializable types.
 
 It can be extended to support any serialization logic that can be inferred by the MemberInfo itself, for example:
-* An attribute that represents serializability.
-* A set of rules on the access modifiers of the field or property.
+* An attribute on the member, e.g. SerializableAttribute.
+* A set of rules on the access modifiers of the field or property, e.g. IsPublic.
 
 Extended with a Generate method, it can output any desired schema format: Json, Protobuf, TypeScript modules, Java classes, etc.
 
