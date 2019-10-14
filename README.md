@@ -16,13 +16,17 @@ https://www.nuget.org/packages/SchemaGenerator.Json/
 
 Consider the following class:
 ```csharp
-public class Apple
+namespace Sample
 {
-    public int SeedCount { get; set; }
+    public class Apple
+    {
+        [Serialize]
+        public int SeedCount { get; set; }
+    }
 }
 ```
 
-you can create a JSON schema like that:
+You can create a JSON schema like that:
 ```csharp
 var schemaGenerator =
     new JsonSchemaGenerator(
@@ -31,6 +35,25 @@ var schemaGenerator =
         memberInfo => memberInfo.HasAttribute<SerializeAttribute>());
 schemaGenerator.Validate();
 var schema = schemaGenerator.Generate();
+```
+
+This will generate the following schema:
+```json
+{
+  "types": [
+    {
+      "name": "Sample.Apple",
+      "baseType": "System.Object",
+      "properties": [
+        {
+          "name": "SeedCount",
+          "type": "System.Int32"
+        }
+      ]
+    }
+  ],
+  "enums": []
+}
 ```
 
 If you want to create another type of schema, create a custom generator by extending Core.SchemaGenerator.
