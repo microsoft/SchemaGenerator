@@ -26,7 +26,7 @@ namespace Sample
 }
 ```
 
-you can create a JSON schema like that:
+You can create a JSON schema like that:
 ```csharp
 var schemaGenerator =
     new JsonSchemaGenerator(
@@ -37,6 +37,7 @@ schemaGenerator.Validate();
 var schema = schemaGenerator.Generate();
 ```
 
+This will generate the following schema:
 ```json
 {
   "types": [
